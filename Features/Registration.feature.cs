@@ -118,7 +118,7 @@ namespace November2023SpecFlowPOM.Features
                             "secret123"});
                 table1.AddRow(new string[] {
                             "Date of Birth",
-                            "01/01/1990"});
+                            "1/July/1993"});
 #line 10
     testRunner.When("I fill in the details:", ((string)(null)), table1, "When ");
 #line hidden

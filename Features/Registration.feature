@@ -8,10 +8,10 @@
     And I click the 'signup' button
     Then I verify that 'ENTER ACCOUNT INFORMATION' is visible
     When I fill in the details:
-      | Field         | Value             |
-      | Title         | Mr.               |
-      | Password      | secret123         |
-      | Date of Birth | 01/01/1990        |
+      | Field         | Value       |
+      | Title         | Mr.         |
+      | Password      | secret123   |
+      | Date of Birth | 1/July/1993 |
     And I select the checkbox <'Sign up for our newsletter!'> and <'Receive special offers from our partners!'>
    
     And I fill in the following details:

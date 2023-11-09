@@ -32,7 +32,7 @@ namespace November2023SpecFlowPOM.StepDefinitions
             IWebElement EmailField = Driver.FindElement(By.XPath("//input[@data-qa='signup-email']"));
             EmailField.SendKeys(email);
         }
-
+        //
         [When(@"I click the '([^']*)' button")]
         public void WhenIClickTheButton(string signup)
         {
@@ -50,28 +50,30 @@ namespace November2023SpecFlowPOM.StepDefinitions
         [When(@"I fill in the details:")]
         public void WhenIFillInTheDetails(Table table)
         {
-            foreach (TableRow row in table.Rows)
+            //Traditional if statement
+            if (table.Rows[0]["Value"].Equals("Mr."))
             {
-
-                foreach (string value in row.Values)
-
-                {
-                    var genderRadiobutton = Driver.FindElement(By.CssSelector("#id_gender1"));
-                    genderRadiobutton.Click();
-                    var Password = Driver.FindElement(By.CssSelector("#password"));
-                    IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
-                    js.ExecuteScript("arguments[0].scrollIntoView(true);", Password);
-                    Password.SendKeys("quickfix");
-
-                    var dayDropDown = Driver.FindElement(By.XPath("//select[@id='days']"));
-                    var monthDropDown = Driver.FindElement(By.CssSelector("#months"));
-                    var yearDropDown = Driver.FindElement(By.XPath("//select[@id='years']"));
-                    new SelectElement(dayDropDown).SelectByText("1");
-                    new SelectElement(monthDropDown).SelectByText("July");
-                    new SelectElement(yearDropDown).SelectByText("1932");
-                   
-                }
+                var genderRadiobutton = Driver.FindElement(By.CssSelector("#id_gender1"));
+                genderRadiobutton.Click();
             }
+            else if(table.Rows[0]["Value"].Equals("Mrs."))
+            {
+                var genderRadiobutton = Driver.FindElement(By.CssSelector("#id_gender2"));
+                genderRadiobutton.Click();
+            }
+
+            var Password = Driver.FindElement(By.CssSelector("#password"));
+            IJavaScriptExecutor js = (IJavaScriptExecutor)Driver;
+            js.ExecuteScript("arguments[0].scrollIntoView(true);", Password);
+            Password.SendKeys(table.Rows[1]["Value"]);
+
+            var dayDropDown = Driver.FindElement(By.XPath("//select[@id='days']"));
+            var monthDropDown = Driver.FindElement(By.CssSelector("#months"));
+            var yearDropDown = Driver.FindElement(By.XPath("//select[@id='years']"));
+            var dob = table.Rows[2]["Value"];
+            new SelectElement(dayDropDown).SelectByText(dob.Split("/")[0]);
+            new SelectElement(monthDropDown).SelectByText(dob.Split("/")[1]);
+            new SelectElement(yearDropDown).SelectByText(dob.Split("/")[2]);
         }
 
 
@@ -90,45 +92,33 @@ namespace November2023SpecFlowPOM.StepDefinitions
         [When(@"I fill in the following details:")]
         public void WhenIFillInTheFollowingDetails(Table table)
         {
+            var firstName = Driver.FindElement(By.CssSelector("#first_name"));
+            firstName.SendKeys("David");
 
-            foreach (TableRow row in table.Rows)
-            {
+            var lastName = Driver.FindElement(By.XPath("//input[@id='last_name']"));
+            lastName.SendKeys("Oye");
 
-                foreach (string value in row.Values)
+            var Company = Driver.FindElement(By.XPath("//input[@id='company']"));
+            Company.SendKeys("Amazon");
 
-                {
-                    var firstName = Driver.FindElement(By.CssSelector("#first_name"));
-                    firstName.SendKeys("David");
+            var AddressLocator = Driver.FindElement(By.CssSelector("#address1"));
+            AddressLocator.SendKeys("37, Northampton Road");
 
-                    var lastName = Driver.FindElement(By.XPath("//input[@id='last_name']"));
-                    lastName.SendKeys("Oye");
+            var CountryLocator = Driver.FindElement(By.CssSelector("#country"));
+            CountryLocator.SendKeys("France");
 
-                    var Company = Driver.FindElement(By.XPath("//input[@id='company']"));
-                    Company.SendKeys("Amazon");
+            var CityLocator = Driver.FindElement(By.XPath("//input[@id='city']"));
+            CityLocator.SendKeys("Paris");
 
-                    var AddressLocator = Driver.FindElement(By.CssSelector("#address1"));
-                    AddressLocator.SendKeys("37, Northampton Road");
+            var ZipCodeLocator = Driver.FindElement(By.CssSelector("#zipcode"));
+            ZipCodeLocator.SendKeys("236553-7616218");
 
-                    var CountryLocator = Driver.FindElement(By.CssSelector("#country"));
-                    CountryLocator.SendKeys("France");
+            var MobileNumber = Driver.FindElement(By.CssSelector("#mobile_number"));
+            MobileNumber.SendKeys("7237238389139");
 
-                    var CityLocator = Driver.FindElement(By.XPath("//input[@id='city']"));
-                    CityLocator.SendKeys("Paris");
-
-                    var ZipCodeLocator = Driver.FindElement(By.CssSelector("#zipcode"));
-                    ZipCodeLocator.SendKeys("236553-7616218");
-
-                    var MobileNumber = Driver.FindElement(By.CssSelector("#mobile_number"));
-                    MobileNumber.SendKeys("7237238389139");
-
-                    var CreateAccountBtn = Driver.FindElement(
-                    By.XPath("//button[contains(text(),'Create Account')]"));
-                    CreateAccountBtn.Click();
-
-                }
-
-        
-            }   
+            var CreateAccountBtn = Driver.FindElement(
+            By.XPath("//button[contains(text(),'Create Account')]"));
+            CreateAccountBtn.Click();
         }
     
     }
